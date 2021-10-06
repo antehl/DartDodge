@@ -1,0 +1,249 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://scripts/main.gd" type="Script" id=1]
+[ext_resource path="res://scripts/player.gd" type="Script" id=2]
+[ext_resource path="res://scripts/newgame.gd" type="Script" id=3]
+[ext_resource path="res://fonts/Lato-Bold.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://scripts/instructions.gd" type="Script" id=5]
+[ext_resource path="res://img/cross.png" type="Texture" id=6]
+[ext_resource path="res://scripts/closeinstr.gd" type="Script" id=7]
+[ext_resource path="res://img/move.png" type="Texture" id=8]
+[ext_resource path="res://img/dart.png" type="Texture" id=9]
+[ext_resource path="res://img/clock.png" type="Texture" id=10]
+
+[sub_resource type="SphereMesh" id=1]
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 20.0
+
+[sub_resource type="PrismMesh" id=3]
+size = Vector3( 20, 40, 0 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 48
+use_filter = true
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 32
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 28
+font_data = ExtResource( 4 )
+
+[node name="Scene" type="Node2D"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Background" type="ColorRect" parent="."]
+margin_right = 540.0
+margin_bottom = 1140.0
+color = Color( 0.0431373, 0.192157, 0.239216, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Player" type="RigidBody2D" parent="."]
+position = Vector2( 270, 480 )
+mode = 2
+gravity_scale = 0.0
+contacts_reported = 1
+contact_monitor = true
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="Mesh" type="MeshInstance2D" parent="Player"]
+scale = Vector2( 20, 20 )
+mesh = SubResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Collision" type="CollisionShape2D" parent="Player"]
+shape = SubResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Dart" type="RigidBody2D" parent="."]
+visible = false
+position = Vector2( 270, 480 )
+gravity_scale = 0.0
+can_sleep = false
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Mesh" type="MeshInstance2D" parent="Dart"]
+rotation = -1.5708
+mesh = SubResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Collision" type="CollisionPolygon2D" parent="Dart"]
+polygon = PoolVector2Array( 20, 0, -20, 10, -20, -10 )
+disabled = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Points" type="Control" parent="."]
+margin_top = 60.0
+margin_right = 540.0
+margin_bottom = 180.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Points"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.5
+margin_bottom = -1.52588e-05
+custom_fonts/font = SubResource( 4 )
+text = "0"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Menu" type="Control" parent="."]
+margin_right = 540.0
+margin_bottom = 960.0
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="NewGame" type="ColorRect" parent="Menu"]
+margin_left = 120.0
+margin_top = 420.0
+margin_right = 420.0
+margin_bottom = 540.0
+color = Color( 0.843137, 0.117647, 0.188235, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="Menu/NewGame"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_default_cursor_shape = 2
+custom_fonts/font = SubResource( 5 )
+button_mask = 3
+text = "New Game"
+flat = true
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Instructions" type="ColorRect" parent="Menu"]
+margin_left = 120.0
+margin_top = 570.0
+margin_right = 420.0
+margin_bottom = 630.0
+color = Color( 0.14902, 0.47451, 0.45098, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="Menu/Instructions"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_default_cursor_shape = 2
+custom_fonts/font = SubResource( 5 )
+button_mask = 3
+text = "Instructions"
+flat = true
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Instructions" type="Control" parent="."]
+margin_right = 540.0
+margin_bottom = 1140.0
+
+[node name="Background" type="ColorRect" parent="Instructions"]
+margin_right = 540.0
+margin_bottom = 1140.0
+color = Color( 0.14902, 0.47451, 0.45098, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="TextureButton" parent="Instructions"]
+margin_right = 90.0
+margin_bottom = 90.0
+button_mask = 3
+texture_normal = ExtResource( 6 )
+expand = true
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Instructions"]
+margin_left = 90.0
+margin_top = 210.0
+margin_right = 450.0
+margin_bottom = 810.0
+custom_fonts/normal_font = SubResource( 6 )
+text = "
+Tap to push
+yourself forward
+
+
+
+Avoid all the darts
+shooting at you
+
+
+
+Stay alive for
+as long as possible"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Instructions"]
+margin_left = 330.0
+margin_top = 210.0
+margin_right = 450.0
+margin_bottom = 330.0
+texture = ExtResource( 8 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect2" type="TextureRect" parent="Instructions"]
+margin_left = 330.0
+margin_top = 390.0
+margin_right = 450.0
+margin_bottom = 510.0
+texture = ExtResource( 9 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect3" type="TextureRect" parent="Instructions"]
+margin_left = 340.0
+margin_top = 580.0
+margin_right = 440.0
+margin_bottom = 680.0
+texture = ExtResource( 10 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
